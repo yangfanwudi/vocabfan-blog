@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="关于" description="VocabFan Lab 是一个人维护的数字产品实验室：用 AI 和代码做网站、工具、游戏与学习产品。">
+  <section class="plain-page">
+    <div class="wrap">
+      <p class="eyebrow"><span class="dot"></span>About · 关于</p>
+      <h1 class="page-title">一个人的<br /><span style="color:var(--accent);">数字实验室</span>。</h1>
+      <div class="plain-grid">
+        <div class="plain-copy">
+          <p>我是 VocabFan，一个独立开发者。用 AI 辅助写代码，做静态网站、小工具、小游戏和数学可视化。</p>
+          <p>目前维护着 <a href="https://hub.vocabfan.online/">17 个站点</a>。它们大多没有后端，也不需要登录：数据留在浏览器里，页面只是工具本身。</p>
+
+          <h2>为什么叫 VocabFan</h2>
+          <p>最早做的是背单词工具，名字就这么留下来了。后来做的东西越来越杂：数独、扫雷、卡坦岛、在线钢琴、大学数学、三国杀台词。<br />“词汇爱好者”已经不能概括这些，但“一个喜欢把想法做成工具的人”还可以。</p>
+
+          <h2>这个博客写什么</h2>
+          <p>写做过的东西，不写没做过的观点。主要围绕四条线：</p>
+          <ul>
+            <li><strong>独立开发记录</strong>：一个想法怎么变成可上线的产品。</li>
+            <li><strong>AI 开发实践</strong>：提示词、需求拆解、代码验收和 Bug 排查。</li>
+            <li><strong>Web 技术与设计</strong>：静态网站、部署、SEO、浏览器端交互。</li>
+            <li><strong>数字实验室</strong>：小游戏、学习工具和创意网页。</li>
+          </ul>
+
+          <h2>技术栈</h2>
+          <p>Astro 生成静态页面，Markdown 写文章，GitHub 做版本管理，Cloudflare Pages 部署。没有数据库，没有 CMS，没有评论系统。能少一个依赖就少一个。</p>
+
+          <h2>联系</h2>
+          <p>在 <a href="https://github.com/yangfanwudi">GitHub</a> 找到我。想看看所有项目，从 <a href="https://hub.vocabfan.online/">Hub</a> 进。</p>
+        </div>
+
+        <aside>
+          <dl class="fact-list">
+            <div><dt>身份</dt><dd>独立开发者</dd></div>
+            <div><dt>坐标</dt><dd>中国</dd></div>
+            <div><dt>在做</dt><dd>静态网站 / 学习工具 / 小游戏</dd></div>
+            <div><dt>站点</dt><dd>17 个</dd></div>
+            <div><dt>写作</dt><dd>每周一篇，慢慢来</dd></div>
+            <div><dt>技术</dt><dd>Astro · Vue · Three.js</dd></div>
+            <div><dt>不做的</dt><dd>AI 资讯、工具导航、日更</dd></div>
+          </dl>
+          <div style="margin-top:22px;padding:20px;border:1px solid var(--ink);background:var(--lime);">
+            <p class="label" style="color:var(--ink);">一句话</p>
+            <p style="margin:8px 0 0;font-family:var(--serif);font-size:25px;line-height:1.35;">把想法，变成真正能用的东西。</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

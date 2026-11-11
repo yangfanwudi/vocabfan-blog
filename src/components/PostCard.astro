@@ -1,0 +1,21 @@
+---
+const { post, index = 0 } = Astro.props;
+const href = `/posts/${post.id}/`;
+const date = new Intl.DateTimeFormat('zh-CN', {
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+}).format(post.data.pubDate);
+---
+<a class="post-card" href={href}>
+  <div class="post-card-top">
+    <span class="label">{post.data.category}</span>
+    <span class="mono" style="color:var(--muted);font-size:10px;">{String(index + 1).padStart(2, '0')}</span>
+  </div>
+  <h3>{post.data.title}</h3>
+  <p>{post.data.description}</p>
+  <div class="card-foot">
+    <span>{date}</span>
+    <span aria-hidden="true">阅读 ↗</span>
+  </div>
+</a>

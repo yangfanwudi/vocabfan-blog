@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('posts')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const categories = ['独立开发', 'AI 开发', '技术实践', '数字实验室'];
+---
+<BaseLayout title="文章" description="VocabFan Lab 的全部文章：独立开发记录、AI 开发实践、Web 技术与产品设计。">
+  <section class="listing-head">
+    <div class="wrap">
+      <p class="eyebrow"><span class="dot"></span>Writing · {posts.length} 篇</p>
+      <h1 class="page-title">文章</h1>
+      <p class="lede">开发记录、技术取舍和上线之后发生的事。先写自己真正做过的，再谈方法。</p>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:26px;">
+        {categories.map((category) => (
+          <span class="pill">{category}</span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="home-section">
+    <div class="wrap">
+      {posts.length ? (
+        <div class="post-grid">
+          {posts.map((post, i) => <PostCard post={post} index={i} />)}
+        </div>
+      ) : (
+        <p class="lede">还没有文章。第一篇文章正在写。</p>
+      )}
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="404" description="页面不存在。">
+  <section class="not-found">
+    <div class="wrap">
+      <p class="eyebrow"><span class="dot"></span>404 · Lost</p>
+      <h1>404</h1>
+      <p class="lede" style="margin-inline:auto;">这个页面不存在，或者已经被移动。<br />回到首页，或者从文章列表继续。</p>
+      <div class="btn-row" style="justify-content:center;">
+        <a class="btn" href="/">回首页</a>
+        <a class="btn secondary" href="/posts/">看文章</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

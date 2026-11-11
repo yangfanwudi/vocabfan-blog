@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const groups = [
+  {
+    name: '学习与可视化',
+    projects: [
+      { name: '数独扫雷', desc: '数独 + 扫雷，推理、铲雷、无猜校验。', href: 'https://sudoku.vocabfan.online/', url: 'sudoku.vocabfan.online' },
+      { name: 'MathPlayground', desc: '高等数学 / 复变函数 / 概率统计，12 个互动关卡。', href: 'https://hub.vocabfan.online/math/', url: 'hub.vocabfan.online/math' },
+      { name: '打怪升级', desc: '把日常任务变成怪物讨伐，XP、装备与成就。', href: 'https://hub.vocabfan.online/task/', url: 'hub.vocabfan.online/task' },
+      { name: 'AI 背单词', desc: '复习优先的间隔重复。', href: 'https://yangfanwudi.github.io/beidanci-site/', url: 'beidanci-site' },
+      { name: 'ExamFlow', desc: '刷题小程序。', href: 'https://yangfanwudi.github.io/ziliao-mini-site/', url: 'ziliao-mini-site' },
+    ],
+  },
+  {
+    name: '游戏与互动',
+    projects: [
+      { name: '卡坦岛', desc: '网页单机版卡坦岛。', href: 'https://yangfanwudi.github.io/catan-web/', url: 'catan-web' },
+      { name: '永昼便利店', desc: '伪人规则怪谈。', href: 'https://yangfanwudi.github.io/yongye-site/', url: 'yongye-site' },
+      { name: '极寒掩体', desc: '资本家挂机录。', href: 'https://yangfanwudi.github.io/frost-bunker/', url: 'frost-bunker' },
+      { name: '落音 PianoFall', desc: '在线钢琴与智能练习。', href: 'https://yangfanwudi.github.io/luoyin-pianofall/', url: 'luoyin-pianofall' },
+      { name: '圈养羊饭', desc: '单文件养羊模拟。', href: 'https://yangfanwudi.github.io/quanyang-yangfan/', url: 'quanyang-yangfan' },
+      { name: '不烧心鉴定所', desc: '万物皆可鉴定。', href: 'https://bushaoxin-cn.pages.dev/', url: 'bushaoxin-cn.pages.dev' },
+      { name: 'Haste × The Boys', desc: '角色模组展示站。', href: 'https://yangfanwudi.github.io/theboys-site/', url: 'theboys-site' },
+      { name: '我叫 MT：崛起', desc: '非官方玩家攻略站。', href: 'https://yangfanwudi.github.io/mt-site/', url: 'mt-site' },
+      { name: '三国杀·台词研习册', desc: '武将、台词、语音与皮肤。', href: 'https://hub.vocabfan.online/sgs/', url: 'hub.vocabfan.online/sgs' },
+    ],
+  },
+  {
+    name: '工具与实验',
+    projects: [
+      { name: '墨库 Moku', desc: '单文件知识库与看板。', href: 'https://yangfanwudi.github.io/moku-site/', url: 'moku-site' },
+      { name: 'Model Inspector', desc: '浏览器内 3D 模型检视器。', href: 'https://yangfanwudi.github.io/model-inspector-site/', url: 'model-inspector-site' },
+      { name: 'GitHub 热门推送', desc: '每日趋势中文早报。', href: 'https://yangfanwudi.github.io/github-daily-site/', url: 'github-daily-site' },
+    ],
+  },
+];
+---
+<BaseLayout title="项目" description="VocabFan 维护的 17 个网站：学习工具、游戏、可视化、资料站与 Web 实验。">
+  <section class="listing-head">
+    <div class="wrap">
+      <p class="eyebrow"><span class="dot"></span>Projects · 17 个站点</p>
+      <h1 class="page-title">做过的<br /><span style="color:var(--accent);">东西</span>。</h1>
+      <p class="lede">不是作品集式的精选，是全部还在线上的实验。大多数没有后端，数据留在浏览器里。</p>
+      <div class="btn-row">
+        <a class="btn" href="https://hub.vocabfan.online/">打开 Hub <span class="arrow">↗</span></a>
+        <a class="btn secondary" href="/posts/">读开发记录</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-section">
+    <div class="wrap">
+      {groups.map((group) => (
+        <div style="margin-bottom:52px;">
+          <div class="section-head">
+            <h2>{group.name}</h2>
+            <span class="mono" style="color:var(--muted);font-size:10px;">{String(group.projects.length).padStart(2, '0')} 个</span>
+          </div>
+          <div class="project-table">
+            {group.projects.map((project) => (
+              <a href={project.href}>
+                <h3>{project.name}</h3>
+                <p>{project.desc}</p>
+                <span class="project-url">{project.url} ↗</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

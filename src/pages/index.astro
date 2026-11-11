@@ -1,0 +1,123 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('posts')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const featured = posts.find((post) => post.data.featured) ?? posts[0];
+const latest = posts.filter((post) => post.id !== featured?.id).slice(0, 4);
+const date = featured
+  ? new Intl.DateTimeFormat('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }).format(featured.data.pubDate)
+  : '';
+
+const projects = [
+  { tag: '学习 / 可视化', name: 'MathPlayground', desc: '大学数学三巨头，12 个可拖拽的互动关卡。', href: 'https://hub.vocabfan.online/math/', url: 'hub.vocabfan.online/math' },
+  { tag: '游戏 / 工具', name: '数独扫雷', desc: '数独 + 扫雷，推理、铲雷、无猜校验。', href: 'https://sudoku.vocabfan.online/', url: 'sudoku.vocabfan.online' },
+  { tag: '效率 / 游戏化', name: '打怪升级', desc: '把日常任务变成怪物讨伐，攒 XP 和装备。', href: 'https://hub.vocabfan.online/task/', url: 'hub.vocabfan.online/task' },
+  { tag: '资料 / 游戏', name: '台词研习册', desc: '三国杀武将、台词、语音与皮肤整理。', href: 'https://hub.vocabfan.online/sgs/', url: 'hub.vocabfan.online/sgs' },
+];
+---
+<BaseLayout
+  title="VocabFan Lab"
+  description="一个人的数字实验室。记录用 AI 和代码开发网站、工具、游戏与数字产品的过程。"
+>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow"><span class="dot"></span>Independent developer · 独立开发</p>
+        <h1>把想法，<br />变成<span class="accent">真正能用</span><br /><span class="thin">的东西。</span></h1>
+        <p class="lede">记录一个人使用 AI 和代码，开发网站、工具、游戏与数字产品的过程。不是教程合集，是实际做过、上线过、改过的东西。</p>
+        <div class="btn-row">
+          <a class="btn" href="/posts/">读文章 <span class="arrow">↗</span></a>
+          <a class="btn secondary" href="/projects/">看项目</a>
+        </div>
+      </div>
+      <aside class="hero-aside" aria-label="当前状态">
+        <p class="label">Now / 现在</p>
+        <ul class="now-list">
+          <li><span>站点</span><span>17 个，持续维护</span></li>
+          <li><span>正在做</span><span>这个博客</span></li>
+          <li><span>写作方向</span><span>独立开发 · AI · Web</span></li>
+          <li><span>更新频率</span><span>每周一篇，慢慢来</span></li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  {featured && (
+    <section class="home-section">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>先读这篇</h2>
+          <a href="/posts/">全部文章 ↗</a>
+        </div>
+        <a class="featured-post" href={`/posts/${featured.id}/`}>
+          <div class="featured-copy">
+            <span class="label">{featured.data.category} · 精选</span>
+            <h3>{featured.data.title}</h3>
+            <p>{featured.data.description}</p>
+            <div class="card-foot" style="margin-top:26px;">
+              <span class="mono" style="color:var(--muted);font-size:10px;">{date}</span>
+              <span class="mono" style="color:var(--accent);font-size:10px;">阅读文章 ↗</span>
+            </div>
+          </div>
+          <div class="featured-visual" aria-hidden="true">
+            <span class="visual-mark">VF</span>
+            <span class="visual-index">01</span>
+          </div>
+        </a>
+      </div>
+    </section>
+  )}
+
+  <section class="home-section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>最新文章</h2>
+        <a href="/posts/">按时间查看 ↗</a>
+      </div>
+      <div class="post-grid">
+        {latest.map((post, i) => <PostCard post={post} index={i + 1} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="home-section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>正在运行的实验</h2>
+        <a href="https://hub.vocabfan.online/">全部 17 个 ↗</a>
+      </div>
+      <div class="project-strip">
+        {projects.map((project) => (
+          <a class="project-card" href={project.href}>
+            <span class="label">{project.tag}</span>
+            <h3>{project.name}</h3>
+            <p>{project.desc}</p>
+            <span class="project-url">{project.url} ↗</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="home-section">
+    <div class="wrap">
+      <div class="manifest">
+        <div class="manifest-intro">
+          <p class="eyebrow" style="color:var(--lime);"><span class="dot"></span>What I write</p>
+          <h2>不做资讯，<br />只写做过的事。</h2>
+          <p>一个项目可以拆成设计、实现、上线和复盘。经验只有在具体的问题里才有用。</p>
+        </div>
+        <ul class="manifest-list">
+          <li><b>独立开发</b><span>一个想法怎么变成产品，包括砍掉的功能和失败尝试。</span></li>
+          <li><b>AI 开发</b><span>真实提示词、需求拆解、代码验收和 Bug 排查。</span></li>
+          <li><b>技术与设计</b><span>静态网站、部署、SEO、浏览器端交互。</span></li>
+          <li><b>数字实验室</b><span>小游戏、学习工具、创意网页和交互拆解。</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,98 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
+const posts = (await getCollection('posts')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const index = posts.findIndex((entry) => entry.id === post.id);
+const prev = index > 0 ? posts[index - 1] : null;
+const next = index < posts.length - 1 ? posts[index + 1] : null;
+const date = new Intl.DateTimeFormat('zh-CN', {
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+}).format(post.data.pubDate);
+const chars = (post.body ?? '').replace(/\s/g, '').length;
+const minutes = Math.max(1, Math.ceil(chars / 500));
+const toc = headings.filter((heading) => heading.depth === 2);
+---
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  type="article"
+  article={true}
+  publishedTime={post.data.pubDate.toISOString()}
+>
+  <header class="article-head">
+    <div class="wrap">
+      <div class="article-meta">
+        <span>{post.data.category}</span>
+        <span>·</span>
+        <time datetime={post.data.pubDate.toISOString()}>{date}</time>
+        <span>·</span>
+        <span>约 {minutes} 分钟</span>
+      </div>
+      <h1>{post.data.title}</h1>
+      <p class="article-deck">{post.data.description}</p>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:24px;">
+        {post.data.tags.map((tag) => <span class="pill">#{tag}</span>)}
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap article-shell">
+    <article class="article-body">
+      <Content />
+
+      {post.data.projectUrl && (
+        <div class="project-note">
+          <span class="label">相关项目</span>
+          <a href={post.data.projectUrl}>{post.data.projectName ?? '去看看'} ↗</a>
+        </div>
+      )}
+
+      <div class="article-footer">
+        <a href="/posts/">← 全部文章</a>
+        <a href="/rss.xml">RSS ↗</a>
+      </div>
+
+      <nav aria-label="文章翻页" style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:18px;margin-top:28px;font-size:14px;">
+        {prev ? <a href={`/posts/${prev.id}/`}>← {prev.data.title}</a> : <span />}
+        {next ? <a href={`/posts/${next.id}/`}>{next.data.title} →</a> : <span />}
+      </nav>
+    </article>
+
+    <aside class="article-aside">
+      {toc.length > 0 && (
+        <div class="aside-block">
+          <h2>本文目录</h2>
+          <ol style="margin:0;padding-left:18px;color:var(--muted);font-size:13px;line-height:1.8;">
+            {toc.map((heading) => (
+              <li><a href={`#${heading.slug}`}>{heading.text}</a></li>
+            ))}
+          </ol>
+        </div>
+      )}
+      <div class="aside-block">
+        <h2>关于作者</h2>
+        <p>VocabFan，独立开发者。用 AI 和代码做网站、工具和游戏，维护着 17 个静态站点。</p>
+        <p style="margin-top:10px;"><a href="/about/">关于这个实验室 →</a></p>
+      </div>
+      <div class="aside-block">
+        <h2>订阅</h2>
+        <p>通过 <a href="/rss.xml">RSS</a> 阅读新文章。没有邮件列表，没有推送。</p>
+      </div>
+    </aside>
+  </div>
+</BaseLayout>

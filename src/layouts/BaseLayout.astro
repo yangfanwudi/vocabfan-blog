@@ -1,0 +1,58 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const { title, description, image = '/og-default.png', type = 'website', publishedTime, article = false } = Astro.props;
+const site = Astro.site ?? new URL('https://blog.vocabfan.online');
+const canonical = new URL(Astro.url.pathname, site);
+const imageUrl = new URL(image, site);
+const fullTitle = title === 'VocabFan Lab' ? title : `${title} · VocabFan Lab`;
+---
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#f1ede2" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="application/rss+xml" title="VocabFan Lab" href="/rss.xml" />
+    <meta name="author" content="VocabFan" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:site_name" content="VocabFan Lab" />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={imageUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+    {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': article ? 'BlogPosting' : 'WebSite',
+      name: fullTitle,
+      headline: title,
+      description,
+      url: canonical.toString(),
+      image: imageUrl.toString(),
+      author: { '@type': 'Person', name: 'VocabFan' },
+      inLanguage: 'zh-CN',
+      ...(article && publishedTime ? { datePublished: publishedTime, dateModified: publishedTime } : {}),
+    })} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">跳到正文</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

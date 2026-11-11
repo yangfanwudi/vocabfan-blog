@@ -1,0 +1,21 @@
+---
+const path = Astro.url.pathname;
+const articlesActive = path === '/posts/' || path.startsWith('/posts/');
+const projectsActive = path === '/projects/';
+const aboutActive = path === '/about/';
+---
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="/" aria-label="VocabFan Lab 首页">
+      <span class="brand-mark">VF</span>
+      <span class="brand-name">VocabFan Lab.</span>
+      <span class="brand-sub">一个人的数字实验室</span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="/posts/" aria-current={articlesActive ? 'page' : undefined}>文章</a>
+      <a href="/projects/" aria-current={projectsActive ? 'page' : undefined}>项目</a>
+      <a href="/about/" aria-current={aboutActive ? 'page' : undefined}>关于</a>
+      <a class="nav-ext" href="https://hub.vocabfan.online/">Hub ↗</a>
+    </nav>
+  </div>
+</header>
