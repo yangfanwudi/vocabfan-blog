@@ -32,10 +32,12 @@ npm run preview
 
 当前部署在 Cloudflare Pages：
 
-- 生产地址：https://vocabfan-blog.pages.dev/
-- 自定义域名：https://blog.vocabfan.online/（等待 DNS CNAME 生效）
+- 正式地址：https://blog.vocabfan.online/
+- Pages 项目：`vocabfan-blog`
+- 预览地址：https://vocabfan-blog.pages.dev/
 
 ```bash
+npm run build
 npx wrangler pages deploy dist --project-name vocabfan-blog --branch main
 ```
 
